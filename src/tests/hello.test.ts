@@ -5,13 +5,15 @@ describe('Hello Check', () => {
   it('Should return welcome message', async () => {
     const userName = 'John';
 
-    const res = await request(app).get(`/?user-name=${userName}`).expect(200);
+    const res = await request(app)
+      .get(`/hello?user-name=${userName}`)
+      .expect(200);
 
     expect(res.body).toEqual(`Hello ${userName}!`);
   });
 
   it('Should return 400 when user-name is missing', async () => {
-    const res = await request(app).get('/').expect(400);
+    const res = await request(app).get('/hello').expect(400);
 
     expect(res.body).toEqual({
       message: '"user-name" query parameter is required',
@@ -19,7 +21,7 @@ describe('Hello Check', () => {
   });
 
   it('Should return 400 when user-name is empty', async () => {
-    const res = await request(app).get('/?user-name=').expect(400);
+    const res = await request(app).get('/hello?user-name=').expect(400);
 
     expect(res.body).toEqual({
       message: '"user-name" query parameter is required',
